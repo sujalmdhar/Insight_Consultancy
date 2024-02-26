@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import Navbar from "./components/Navbar";
+import Home from "./components/Home";
+import Aboutus from "./components/Aboutus";
+import Contactus from "./components/Contactus";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Combcomp from "./components/Combcomp";
 
 function App() {
+  const [theme, setTheme] = useState("light");
+  const toggleTheme = () => {
+    if (theme === "dark") {
+      setTheme("light");
+      document.body.style.backgroundColor = "#FFFFFF";
+    } else { 
+      setTheme("dark");
+      document.body.style.backgroundColor = "rgb(19 24 29)";
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Navbar mode={theme} toggleTheme={toggleTheme} />
+        
+        <div className="container">
+          <Routes>
+            {" "}
+            <Route
+              path="/RideQuest"
+              element={<Combcomp mode={theme} toggleTheme={toggleTheme} />}
+            />
+            <Route
+              path="/Combcomp"
+              element={<Combcomp mode={theme} toggleTheme={toggleTheme} />}
+            />
+            <Route path="/Home" element={<Home mode={theme} />} />
+            <Route path="/Aboutus" element={<Aboutus mode={theme} />} />
+            <Route path="/Contactus" element={<Contactus mode={theme} />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
   );
 }
 
